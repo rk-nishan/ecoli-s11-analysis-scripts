@@ -1,0 +1,39 @@
+name: Validate scripts
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.13'
+          cache: pip
+      - name: Install tested dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Check dependency consistency
+        run: python -m pip check
+      - name: Check Python syntax
+        run: python -B -c "import ast, pathlib; [ast.parse(p.read_text(encoding='utf-8-sig')) for p in pathlib.Path('.').rglob('*.py')]"
+      - name: Check command interfaces
+        run: |
+          python -B scripts/prepare_figure_inputs.py --help
+          python -B scripts/fetch_references.py --help
+          python -B analyses/figures/scripts/reproduce_all.py --help
+          python -B analyses/clermon/scripts/run_local_clermont.py --help
+          python -B analyses/clermon/scripts/audit_clermont.py --help
+          python -B scripts/download_galaxy_history.py --help
+          python -B scripts/export_galaxy_provenance.py --help
+          python -B scripts/compare_fasta.py --help
+          python -B scripts/validate_results.py --help
+          python -B scripts/run_pgap.py --help

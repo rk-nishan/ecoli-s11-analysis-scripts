@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: "Please cite this software DOI when using the scripts. Cite the NCBI accessions separately for sequencing data."
+type: software
+title: "Reproducible analysis scripts for Escherichia coli S11"
+version: 1.0.0
+date-released: 2026-10-22
+doi: "10.6084/m9.figshare.34741515"
+authors:
+  - family-names: Nishan
+    given-names: Rasel Khan
+    orcid: "https://orcid.org/0009-0006-7427-2246"
+repository-code: "https://github.com/rk-nishan/ecoli-s11-analysis-scripts"
+url: "https://github.com/rk-nishan/ecoli-s11-analysis-scripts"
+license: MIT
